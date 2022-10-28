@@ -1,0 +1,12 @@
+/*
+#include <stdint.h>
+char 	8 	1 	%c
+int8_t 	8 	1 	%d
+uint8_t 	8 	1 	%u
+int16_t 	16 	2 	%d
+uint16_t 	16 	2 	%u
+int32_t 	32 	4 	%ld
+uint32_t 	32 	4 	%lu
+int64_t 	64 	8 	%ld/%I64d
+int64_t 	64 	8 	%lu/%I64u
+*/
