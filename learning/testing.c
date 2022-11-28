@@ -1,16 +1,61 @@
 #include <stdio.h>
+#include <stdlib.h>
+// make a struct for list
+typedef struct
+{
+    int value;
+    struct LinkedList *next;
+
+} LinkedList;
+// create a function to add to the list
+LinkedList *LinkedListAdd(LinkedList *list, int added)
+{
+    LinkedList *new = malloc(sizeof(LinkedList));
+    new->value = added;
+    new->next = list;
+    return new;
+}
+//create a function to change element in the list
+LinkedList *LinkedListChange(LinkedList *list, int changed, int new)
+{
+    LinkedList *pointer = list;
+    while (pointer != NULL)
+    {
+        if (pointer->value == changed)
+        {
+            pointer->value = new;
+            return list;
+        }
+        pointer = pointer->next;
+    }
+    return list;
+}
+
+// create a function to print the list
+void LinkedListPrint(LinkedList *list)
+{
+    while (list != NULL)
+    {
+        printf("%d, ", list->value);
+        list = list->next;
+    }
+    printf("");
+}
 
 int main()
 {
-    int arr[] = {1,2,3,4};
-    int pointer = &arr[0];
-    int pointer2 = &arr[1];
-    //printf ("%p", pointer);
-    printf("\n");
-    //printf ("%p", pointer+1);
-    
+    LinkedList *list = NULL;
+    list = LinkedListAdd(list, 1);
+    list = LinkedListAdd(list, 2);
+    list = LinkedListAdd(list, 3);
+    list = LinkedListAdd(list, 4);
+    list = LinkedListAdd(list, 5);
+    list = LinkedListAdd(list, 6);
+    list = LinkedListAdd(list, 7);
+    list = LinkedListAdd(list, 8);
+    list = LinkedListAdd(list, 9);
+    list = LinkedListAdd(list, 10);
+    LinkedListPrint(list);
 
-    double liczba = 1032141523653423781267869239236789234689236923.0*2314;
-    printf("%f\n", liczba);
     return 0;
 }
