@@ -1,15 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
-struct person 
-{
-  char* name;
-  int rodzinaid;
-};
+#include <string.h>
 
-void main() 
+char *display()
 {
-    int rodzina[] = {1,2,3,4,5};
-    struct person jan={"jan", 0};
-    struct person jerzy={"jerzy", 1};
-    struct person jozef={"jozef", 2}; 
+  char* newstr = malloc(sizeof(char) * 100);
+  strcpy(newstr, "This is a test");
+  newstr = "asd";
+  free(newstr);
+  newstr = "zmiana";
+  newstr = malloc(sizeof(char) * 100);
+  return newstr;
+}
+
+int main() 
+{
+  char* test = "test";
+  char* lol = display();
+  printf("%s", lol);
+  return 0;
 }

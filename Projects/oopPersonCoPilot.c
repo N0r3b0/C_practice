@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define nameLength 32    //length of strings made for names
+#define nameLength 32 // length of strings made for names
 
 typedef struct Person
 {
@@ -11,8 +11,8 @@ typedef struct Person
     void (*setName)(struct Person *, char[nameLength]);
     void (*setLastName)(struct Person *, char[nameLength]);
     void (*setAge)(struct Person *, int);
-    char* (*toString)(struct Person *);
-    
+    char *(*toString)(struct Person *);
+
 } Person;
 
 void setName_f(Person *person, char newName[nameLength])
@@ -43,10 +43,10 @@ char *personToStr_f(Person *person)
         i++;
     }
 
-    output[counter] = ' ';    //adding whitespace
+    output[counter] = ' '; // adding whitespace
     counter++;
 
-    i = 0;  //i must be 0 before next loop
+    i = 0; // i must be 0 before next loop
     while (person->lastname[i] != '\0')
     {
         output[counter] = person->lastname[i];
@@ -57,10 +57,10 @@ char *personToStr_f(Person *person)
     output[counter] = ' ';
     counter++;
 
-    char *tempAge = malloc(3*sizeof(char));    //temp for itoa, 3 digits for age
-    itoa(person->age, tempAge, 10);  //int to string
-    i = 0;   // i must be 0 before next loop
-    while (i<2)
+    char *tempAge = malloc(3 * sizeof(char)); // temp for itoa, 3 digits for age
+    itoa(person->age, tempAge, 10);           // int to string
+    i = 0;                                    // i must be 0 before next loop
+    while (i < 2)
     {
         output[counter] = tempAge[i];
         counter++;
@@ -71,35 +71,49 @@ char *personToStr_f(Person *person)
     return output;
 }
 
-void personConstructor_f(Person *person) // connecting functions to Person struct
+//new person with default values
+Person *newPerson()
 {
+    Person *person = malloc(sizeof(Person));
+    //connecting functions to struct
     person->setName = setName_f;
     person->setLastName = setLastName_f;
     person->setAge = setAge_f;
     person->toString = personToStr_f;
+    return person;
 }
+
+//new person with custom values
+Person *newPersonCustom(char name[nameLength], char lastname[nameLength], int age)
+{
+    Person *person = malloc(sizeof(Person));
+    person->setName = setName_f;
+    person->setLastName = setLastName_f;
+    person->setAge = setAge_f;
+    person->toString = personToStr_f;
+    person->setName(person, name);
+    person->setLastName(person, lastname);
+    person->setAge(person, age);
+    return person;
+}
+
+//person destructor
+void deletePerson(Person *person)
+{
+    free(person);
+}
+
 
 int main(void)
 {
-    Person person1;
-    //connecting functions to Person struct
-    personConstructor_f(&person1);
-    
-    //setting variables
-    person1.setName(&person1, "Adam");
-    person1.setLastName(&person1, "Kowalski");
-    person1.setAge(&person1, 16);
+    Person *person1 = newPerson();
+    person1->setName(person1, "John");
+    person1->setLastName(person1, "Doe");  
+    person1->setAge(person1, 30);
+    printf("%s", person1->toString(person1));
 
-    printf("%s", person1.toString(&person1));
-    
-    printf("\n");
-
-    //new variables
-    person1.setName(&person1, "Alexey");
-    person1.setLastName(&person1, "Isalov");
-    person1.setAge(&person1, 14);
-
-    printf("%s", person1.toString(&person1));
+    Person *person2 = newPersonCustom("Jane", "Doe", 25);
+    printf("%s", person2->toString(person2));
 
     return 0;
 }
